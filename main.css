@@ -1,0 +1,19 @@
+canvas{
+	background: blue;
+	border: solid #888 2px;
+}
+
+.codel{
+	margin: 0;
+	padding: 0;
+	width: 8px;
+	height: 8px;
+	font-size: 0;
+	border: solid #888 1px;
+	background: #000;
+}
+
+#codeField{
+	line-height: 0;
+	white-space: nowrap;
+}

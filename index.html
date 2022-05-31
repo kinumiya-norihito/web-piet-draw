@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>piet用</title>
+		<link href="main.css" rel="stylesheet"/>
+		<script src="main.js"></script>
+	</head>
+	<body>
+		<div>
+			<details>
+				<summary>
+					各種設定
+				</summary>
+				codel:<input type="number" value="16" id="inputCodel"/><br/>
+				width:<input type="number" value="16" id="inputWidth"/><br/>
+				height:<input type="number" value="16" id="inputHeight"/><br/>
+				<input type="file" id="inputFiles"/><button id="importButton">import</button><br/>
+				<button id="setButton">Set</button><br/>
+			</details>
+			<button id="runButton">Run</button><br/>
+			file name:<input type="text" id="inputFileName"><button id="exportButton">export</button>
+		</div>
+		<div>
+			<button id="undoButton">Undo</button><button id="redoButton">Redo</button><br/>
+			<canvas id="colorPalette"></canvas><br/>
+			<canvas id="canvas"></canvas><br/>
+			<input type="radio" name="dtype" value="dot" checked>dot<br/>
+			<input type="radio" name="dtype" value="rect">rect<br/>
+		</div>
+	</body>
+</html>
