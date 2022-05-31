@@ -5,7 +5,6 @@ window.onload = () => {
 	codeWidth,
 	codeHeight,
 	checkPosition = [null,null],
-	tempImageData,
 	saveImageDataList = [],
 	sidlp = 0;
 	const
@@ -123,8 +122,18 @@ window.onload = () => {
 	canvas.addEventListener('mousemove',(e)=>{
 		loadImageData();
 		ctx.strokeStyle = '#888';	//これどこに置くか
-		ctx.strokeRect(Math.floor(e.offsetX/codelSize)*codelSize,0,codelSize,codelSize*codeHeight);
-		ctx.strokeRect(0,Math.floor(e.offsetY/codelSize)*codelSize,codelSize*codeWidth,codelSize);
+		const
+		x = Math.floor(e.offsetX/codelSize)*codelSize,
+		y = Math.floor(e.offsetY/codelSize)*codelSize;
+		ctx.strokeRect(x,0,codelSize,codelSize*codeHeight);
+		ctx.strokeRect(0,y,codelSize*codeWidth,codelSize);
+		if(checkPosition[0]!=null){
+			const rectSize = (Math.abs(x-checkPosition[0])/codelSize+1)*(Math.abs(y-checkPosition[1])/codelSize+1);
+			canvas.title = `codel: ${rectSize}`;
+		}
+		else{
+			canvas.title = '';
+		}
 	});
 	canvas.addEventListener('mouseout',loadImageData);
 	colorPalette.addEventListener('click',(e)=>{
@@ -144,7 +153,7 @@ window.onload = () => {
 	});
 	redoButton.addEventListener('click',()=>{
 		sidlp = Math.min(sidlp+1,SAVEMAX-1,saveImageDataList.length-1);
-		ctx.putImageData(saveImageDataList[sidlp], 0, 0);
+		loadImageData();
 	});
 	importButton.addEventListener('click',()=>{
 		try{
@@ -157,7 +166,7 @@ window.onload = () => {
 				img.src = fileReader.result;
 				img.onload = () => {
 					ctx.drawImage(img,0,0);
-					tempImageData = ctx.getImageData(0, 0, codelSize * codeWidth, codelSize * codeHeight);
+					saveImageData();
 				};
 			};
 		}
