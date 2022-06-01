@@ -10,6 +10,12 @@ window.onload = () => {
 	const
 	//定数
 	SAVEMAX = 16;
+	colorList = [
+		[255,192,192],[255,255,192],[192,255,192],[192,255,255],[192,192,255],[255,192,255],
+		[255,  0,  0],[255,255,  0],[  0,255,  0],[  0,255,255],[  0,  0,255],[255,  0,255],
+		[192,  0,  0],[192,192,  0],[  0,192,  0],[  0,192,192],[  0,  0,192],[192,  0,192],	
+		[  0,  0,  0],[255,255,255]
+	];
 	//element
 	inputCodel = document.getElementById('inputCodel'),
 	inputWidth = document.getElementById('inputWidth'),
@@ -35,22 +41,20 @@ window.onload = () => {
 		codeHeight = +inputHeight.value;
 		canvas.width = codelSize * codeWidth;
 		canvas.height = codelSize * codeHeight;
-		if(!(+saveImageDataList)){
+		if(!saveImageDataList.length){
 			ctx.fillStyle = "#FFFFFF";
 			ctx.fillRect(0,0,canvas.width,canvas.height);
 			cpctx.fillStyle = '#FFFFFF';
 			sidlp=-1;
 		}
+		else{
+			loadImageData();
+		}
 		saveImageData();
 		colorPalette.width = codelSize*6;
 		colorPalette.height = codelSize*4;
-		const cl = [
-			'#FFC0C0','#FFFFC0','#C0FFC0','#C0FFFF','#C0C0FF','#FFC0FF',
-			'#FF0000','#FFFF00','#00FF00','#00FFFF','#0000FF','#FF00FF',
-			'#C00000','#C0C000','#00C000','#00C0C0','#0000C0','#C000C0'
-		];
 		for(let i = 0; i < 18; i++){
-			cpctx.fillStyle = cl[i];
+			cpctx.fillStyle = `rgb(${colorList[i][0]},${colorList[i][1]},${colorList[i][2]})`;
 			cpctx.fillRect((i%6)*codelSize,Math.floor(i/6)*codelSize,codelSize,codelSize);
 		}
 		cpctx.fillStyle = '#000000';
@@ -67,6 +71,11 @@ window.onload = () => {
 		}
 		switch(drawType){
 			case 'dot':
+				if(checkPosition[0]!=null){
+					sidlp--;
+					checkPosition[0]=null;
+					checkPosition[1]=null;
+				}
 				loadImageData();
 				ctx.fillRect(Math.floor(e.offsetX/codelSize)*codelSize,Math.floor(e.offsetY/codelSize)*codelSize,codelSize,codelSize);
 				break;
@@ -80,7 +89,7 @@ window.onload = () => {
 					ly = Math.min(moy, checkPosition[1]),
 					rx = Math.max(mox, checkPosition[0]),
 					ry = Math.max(moy, checkPosition[1]);
-					sidlp-=1;
+					sidlp--;
 					loadImageData();
 					ctx.fillRect(lx,ly,rx-lx+codelSize,ry-ly+codelSize);
 					checkPosition[0]=null;
@@ -110,11 +119,40 @@ window.onload = () => {
 		}
 		while(saveImageDataList.length!=sidlp)saveImageDataList.pop();
 		saveImageDataList[sidlp] = ctx.getImageData(0, 0, codelSize * codeWidth, codelSize * codeHeight);
+	},
+	runPiet = () => {
+		const
+		pietData = new Array(codeHeight);
+		for(let y = 0; y < codeHeight; y++){
+			pietData[y] = new Array(codeWidth);
+			for(let x = 0; x < codeWidth; x++){
+				const
+				imageData = ctx.getImageData(x*codelSize,y*codelSize,codelSize,codelSize).data;
+				let colorNumber = 19;
+				for(let i = 0; i < 20; i++){
+					if(colorList[i][0]==imageData[0]&&colorList[i][1]==imageData[1]&&colorList[i][2]==imageData[2]&&imageData[3]==255)colorNumber = i;
+				}
+				for(let i = 1; i < codelSize ** 2; i++){
+					if(!(colorList[colorNumber][0]==imageData[4*i+0]&&colorList[colorNumber][0]==imageData[4*i+0]&&colorList[colorNumber][2]==imageData[4*i+2]&&imageData[4*i+3]==255))colorNumber=19; 
+				}
+				pietData[y][x]=colorNumber;
+			}
+		}
+		//ここから本番
+		let
+		cd = 0,
+		cc = 0,
+		stk = [],
+		pd = [0,0];
+		while(0){
+		}
+		console.log(pietData);
 	};
 
 	//初期化
 	set();
-
+	
+	runButton.addEventListener('click',runPiet);
 	inputCodel.addEventListener('blur',()=>{numberCheck(inputCodel,16);});
 	inputWidth.addEventListener('blur',()=>{numberCheck(inputWidth,16);});
 	inputHeight.addEventListener('blur',()=>{numberCheck(inputHeight,16);});
