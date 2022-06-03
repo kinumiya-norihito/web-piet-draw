@@ -1,6 +1,11 @@
 canvas{
-	background: blue;
+	background: #888;
 	border: solid #888 2px;
+}
+
+textarea{
+	width:360px;
+	height:90px;
 }
 
 .codel{

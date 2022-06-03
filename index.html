@@ -18,15 +18,26 @@
 				<input type="file" id="inputFiles"/><button id="importButton">import</button><br/>
 				<button id="setButton">Set</button><br/>
 			</details>
-			<!--<button id="runButton">Run</button><br/>-->
+			<button id="runButton">Run</button><br/>
 			file name:<input type="text" id="inputFileName"><button id="exportButton">export</button>
 		</div>
 		<div>
 			<button id="undoButton">Undo</button><button id="redoButton">Redo</button><br/>
 			<canvas id="colorPalette"></canvas><br/>
 			<canvas id="canvas"></canvas><br/>
+			出力:<textarea id="outArea"></textarea><br/>
 			<input type="radio" name="dtype" value="dot" checked>dot<br/>
 			<input type="radio" name="dtype" value="rect">rect<br/>
 		</div>
+		<details>
+			<summary>状態遷移など</summary>
+			<textarea id="showInfoArea"></textarea>
+		</details>
+		<details>
+			<summary>説明</summary>
+			<p>
+				これはpietの仕様を正確に守っているとは言えないかもしれません。
+			</p>
+		</details>
 	</body>
 </html>
