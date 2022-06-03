@@ -33,6 +33,7 @@ window.onload = () => {
 	redoButton = document.getElementById('redoButton'),
 	drawTypeRadios = document.getElementsByName('dtype'),
 	outArea = document.getElementById('outArea'),
+	showInfoArea = document.getElementById('showInfoArea'),
 	//その他
 	ctx = canvas.getContext('2d'),
 	cpctx = colorPalette.getContext('2d'),
@@ -123,9 +124,10 @@ window.onload = () => {
 		saveImageDataList[sidlp] = ctx.getImageData(0, 0, codelSize * codeWidth, codelSize * codeHeight);
 	},
 	runPiet = () => {
-		console.log('残ってるけど気にしないで');
+		//console.log('残ってるけど気にしないで');
 		//初期化
 		outArea.value='';
+		showInfoArea.value='';
 		const
 		pietData = new Array(codeHeight);
 		for(let y = 0; y < codeHeight; y++){
@@ -168,10 +170,9 @@ window.onload = () => {
 			}
 			else if(pietData[pd.y][pd.x]<18){
 				//cnの更新
-				//
 				cn = ((Math.floor(pietData[pd.y][pd.x]/6)-Math.floor(bn/6)+3)%3)*6+((pietData[pd.y][pd.x] - bn + 18) % 6);
 				bn = pietData[pd.y][pd.x];
-				//console.log(`命令番号:${cn}`);
+				showInfoArea.value+=`命令:${ (['none','add','div','great','dup','in(c)','push','sub','mod','point','roll','out(n)','pop','mul','not','switch','in(n)','out(c)'])[cn] }\n`;
 				switch(cn){
 					case 1:
 						//add
@@ -262,9 +263,7 @@ window.onload = () => {
 					case 16:
 						//in(n)
 						const num=prompt('number');
-						//'0' '089' 'cdef' false ''
-						//0 89 NaN 0 0
-						if(+num||(num&&(!+num)))ps.push(+num);
+						if(+num||(0===+num))ps.push(+num);
 						break;
 					case 17:
 						//out(c)
@@ -273,7 +272,7 @@ window.onload = () => {
 					default:
 						//???
 				}
-				console.log(`スタック:${ps}`);
+				showInfoArea.value+=`\tスタック:${ps}\n`;
 				//codelの形を把握
 				
 				//初期化
@@ -359,6 +358,10 @@ window.onload = () => {
 						codelAnalysis[1].push([lp[0],lp[1]-1]);
 						tcd[lp[1]-1][lp[0]]=1;
 					}
+				}
+				showInfoArea.value+=`\tcolorBlockのサイズ:${cs}\n`;
+				for(let i=0; i < 8; i++){
+					showInfoArea.value+=`\t\t${'→↓←↑'[Math.floor(i/2)]}${'LR'[i%2]}:${codelEdge[i]}\n`;
 				}
 				/*
 				 * ここに書くのが良い？
