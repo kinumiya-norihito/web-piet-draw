@@ -226,7 +226,7 @@ window.onload = () => {
 							const n = ps.pop(), d = ps.pop(), sp = ps.length - d, tempList = new Array(d);
 							//i番目の要素をi+(n%d)番目にする
 							for(let i = 0; i < d; i++){
-								tempList[i+(n%d)] = ps[sp+i];
+								tempList[(i+n)%d] = ps[sp+i];
 							}
 							for(let i = 0; i < d; i++){
 								ps[sp+i] = tempList[i];
@@ -235,11 +235,11 @@ window.onload = () => {
 						break;
 					case 11:
 						//out(n)
-						outArea.value+=ps.pop();
+						if(ps.length>=1)outArea.value+=ps.pop();
 						break;
 					case 12:
 						//pop
-						ps.pop();
+						if(ps.length>=1)ps.pop();
 						break;
 					case 13:
 						//mul
@@ -259,7 +259,7 @@ window.onload = () => {
 						break;
 					case 17:
 						//out(c)
-						outArea.value+=String.fromCodePoint(ps.pop());
+						if(ps.length>=1)outArea.value+=String.fromCodePoint(ps.pop());
 						break;
 					default:
 						//???
