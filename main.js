@@ -123,6 +123,7 @@ window.onload = () => {
 		saveImageDataList[sidlp] = ctx.getImageData(0, 0, codelSize * codeWidth, codelSize * codeHeight);
 	},
 	runPiet = () => {
+		console.log('残ってるけど気にしないで');
 		//初期化
 		outArea.value='';
 		const
@@ -150,6 +151,7 @@ window.onload = () => {
 		ps = [],	//プログラムスタック
 		pd = {x:0,y:0},	//ポジション(?)
 		cn = bn = pietData[pd.y][pd.x];	//ポジションにあるコードの番号
+		str = '';
 		for(let pp = 0; pp < PIETMAX; pp++){
 			//とりあえずpdから探索するしかない
 			/*
@@ -196,7 +198,11 @@ window.onload = () => {
 						break;
 					case 5:
 						//in(c)
-						//あとで
+						if(!str.length)str = prompt('char') || '';
+						if(str.length){
+							ps.push(str.codePointAt(0));
+							str=str.substr(1);
+						}
 						break;
 					case 6:
 						//push
@@ -255,7 +261,10 @@ window.onload = () => {
 						break;
 					case 16:
 						//in(n)
-						//あとで
+						const num=prompt('number');
+						//'0' '089' 'cdef' false ''
+						//0 89 NaN 0 0
+						if(+num||(num&&(!+num)))ps.push(+num);
 						break;
 					case 17:
 						//out(c)
