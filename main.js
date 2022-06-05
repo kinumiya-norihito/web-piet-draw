@@ -10,7 +10,7 @@ window.onload = () => {
 	const
 	//定数
 	SAVEMAX = 16,
-	PIETMAX = 1000000,
+	PIETMAX = 10000,
 	colorList = [
 		[255,192,192],[255,255,192],[192,255,192],[192,255,255],[192,192,255],[255,192,255],
 		[255,  0,  0],[255,255,  0],[  0,255,  0],[  0,255,255],[  0,  0,255],[255,  0,255],
@@ -225,7 +225,7 @@ window.onload = () => {
 						break;
 					case 9:
 						//point
-						if(ps.length>=1)cd=(ps.pop()+cd)%4;
+						if(ps.length>=1)cd=((ps.pop()+cd)%4+4)%4;
 						break;
 					case 10:
 						//roll
@@ -258,7 +258,7 @@ window.onload = () => {
 						break;
 					case 15:
 						//switch
-						if(ps.length>=1)cc=(ps.pop()+cc)%2;
+						if(ps.length>=1)cc=(Math.abs(ps.pop())+cc)%2;
 						break;
 					case 16:
 						//in(n)
