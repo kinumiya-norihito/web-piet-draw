@@ -147,7 +147,7 @@ window.onload = () => {
 		}
 		//ここから本番
 		let
-		cd = 0,
+		dp = 0,
 		cc = 0,
 		cs = 0,	//塊のcodelの数
 		ps = [],	//プログラムスタック
@@ -225,7 +225,7 @@ window.onload = () => {
 						break;
 					case 9:
 						//point
-						if(ps.length>=1)cd=((ps.pop()+cd)%4+4)%4;
+						if(ps.length>=1)dp=((ps.pop()+dp)%4+4)%4;
 						break;
 					case 10:
 						//roll
@@ -375,8 +375,8 @@ window.onload = () => {
 			for(let i = 0; i <= 8; i++){
 				if(i==8)return;
 				//ここに範囲外やblackの判定を入れる
-				const edgePoint = codelEdge[cd*2+cc];
-				switch(cd){
+				const edgePoint = codelEdge[dp*2+cc];
+				switch(dp){
 					case 0:
 						edgePoint[0]++;
 						break;
@@ -395,7 +395,7 @@ window.onload = () => {
 					break;
 				}
 				if(!(i%2))cc=(cc+1)%2;
-				if(i%2)cd=(cd+1)%4;
+				if(i%2)dp=(dp+1)%4;
 			}
 		}
 	};
