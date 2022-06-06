@@ -6,11 +6,11 @@ window.onload = () => {
 	codeHeight,
 	checkPosition = [null,null],
 	saveImageDataList = [],
-	sidlp = 0;
+	sidlp = 0,
+	PIETMAX = 1000000;
 	const
 	//定数
 	SAVEMAX = 16,
-	PIETMAX = 10000,
 	colorList = [
 		[255,192,192],[255,255,192],[192,255,192],[192,255,255],[192,192,255],[255,192,255],
 		[255,  0,  0],[255,255,  0],[  0,255,  0],[  0,255,255],[  0,  0,255],[255,  0,255],
@@ -27,6 +27,7 @@ window.onload = () => {
 	importButton = document.getElementById('importButton'),
 	inputFileName = document.getElementById('inputFileName'),
 	exportButton = document.getElementById('exportButton'),
+	attemptLimits = document.getElementById('attemptLimits'),
 	canvas = document.getElementById('canvas'),
 	colorPalette = document.getElementById('colorPalette'),
 	undoButton = document.getElementById('undoButton'),
@@ -34,6 +35,7 @@ window.onload = () => {
 	drawTypeRadios = document.getElementsByName('dtype'),
 	outArea = document.getElementById('outArea'),
 	showInfoArea = document.getElementById('showInfoArea'),
+	showCanvasInfo = document.getElementById('showCanvasInfo'),
 	//その他
 	ctx = canvas.getContext('2d'),
 	cpctx = colorPalette.getContext('2d'),
@@ -170,7 +172,12 @@ window.onload = () => {
 			}
 			else if(pietData[pd.y][pd.x]<18){
 				//cnの更新
-				cn = ((Math.floor(pietData[pd.y][pd.x]/6)-Math.floor(bn/6)+3)%3)*6+((pietData[pd.y][pd.x] - bn + 18) % 6);
+				if(bn===19){
+					cn = 0;
+				}
+				else{
+					cn = ((Math.floor(pietData[pd.y][pd.x]/6)-Math.floor(bn/6)+3)%3)*6+((pietData[pd.y][pd.x] - bn + 18) % 6);
+				}
 				bn = pietData[pd.y][pd.x];
 				showInfoArea.value+=`命令:${ (['none','add','div','great','dup','in(c)','push','sub','mod','point','roll','out(n)','pop','mul','not','switch','in(n)','out(c)'])[cn] }\n`;
 				switch(cn){
@@ -370,6 +377,7 @@ window.onload = () => {
 			else{
 				//白
 				//ここも特に処理を書かない
+				bn = 19;
 			}
 			//codelの移動
 			for(let i = 0; i <= 8; i++){
@@ -410,21 +418,23 @@ window.onload = () => {
 	canvas.addEventListener('click',drawCodel);
 	canvas.addEventListener('mousemove',(e)=>{
 		loadImageData();
+		showCanvasInfo.value = '';
 		ctx.strokeStyle = '#888';	//これどこに置くか
 		const
 		x = Math.floor(e.offsetX/codelSize)*codelSize,
 		y = Math.floor(e.offsetY/codelSize)*codelSize;
 		ctx.strokeRect(x,0,codelSize,codelSize*codeHeight);
 		ctx.strokeRect(0,y,codelSize*codeWidth,codelSize);
+		showCanvasInfo.value += `position: {x:${x/codelSize},y:${y/codelSize}}\n`;
 		if(checkPosition[0]!=null){
 			const rectSize = (Math.abs(x-checkPosition[0])/codelSize+1)*(Math.abs(y-checkPosition[1])/codelSize+1);
-			canvas.title = `codel: ${rectSize}`;
-		}
-		else{
-			canvas.title = '';
+			showCanvasInfo.value += `size: ${rectSize}\n`;
 		}
 	});
-	canvas.addEventListener('mouseout',loadImageData);
+	canvas.addEventListener('mouseout',()=>{
+		loadImageData();
+		showCanvasInfo.value = '';
+	});
 	colorPalette.addEventListener('click',(e)=>{
 		const cdl = cpctx.getImageData(e.offsetX,e.offsetY,1,1).data;
 		ctx.fillStyle = cpctx.fillStyle = `rgb(${cdl[0]},${cdl[1]},${cdl[2]})`;
@@ -468,5 +478,10 @@ window.onload = () => {
 		a.href = canvas.toDataURL();
 		a.download = (inputFileName.value || 'export') + '.png';
 		a.click();
+	});
+	attemptLimits.addEventListener('blur',()=>{
+		PIETMAX = +attemptLimits.value || 1000000;
+		if(PIETMAX<=0)PIETMAX = 1000000;
+		attemptLimits.value = PIETMAX;
 	});
 };
