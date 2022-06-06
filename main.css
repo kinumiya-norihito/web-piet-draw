@@ -1,3 +1,7 @@
+body{
+	margin: 0;
+	padding: 0;
+}
 canvas{
 	background: #888;
 	border: solid #888 2px;
@@ -8,17 +12,28 @@ textarea{
 	height:90px;
 }
 
-.codel{
-	margin: 0;
-	padding: 0;
-	width: 8px;
-	height: 8px;
-	font-size: 0;
-	border: solid #888 1px;
+table{
 	background: #000;
 }
 
-#codeField{
-	line-height: 0;
-	white-space: nowrap;
+th,td{
+	background: #fff;
+}
+
+.configArea{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 35%;
+	margin: 0;
+	padding: 16px;
+}
+
+.mainArea{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 60%;
+	margin: 0;
+	padding: 16px;
 }
