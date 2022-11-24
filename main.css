@@ -1,26 +1,28 @@
-body{
+body {
 	margin: 0;
 	padding: 0;
 }
-canvas{
+
+canvas {
 	background: #888;
 	border: solid #888 2px;
 }
 
-textarea{
-	width:360px;
-	height:90px;
+textarea {
+	width: 360px;
+	height: 90px;
 }
 
-table{
+table {
 	background: #000;
 }
 
-th,td{
+th,
+td {
 	background: #fff;
 }
 
-.configArea{
+.configArea {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -29,7 +31,7 @@ th,td{
 	padding: 16px;
 }
 
-.mainArea{
+.mainArea {
 	position: absolute;
 	top: 0;
 	left: 0;
