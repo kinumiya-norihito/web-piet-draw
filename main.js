@@ -154,7 +154,7 @@ window.onload = () => {
 				cs = 0,	//塊のcodelの数
 				ps = [],	//プログラムスタック
 				pd = { x: 0, y: 0 },	//ポジション(?)
-				pwb = ";",	//通過した白block
+				pwb = "",	//通過した白block
 				cn = bn = pietData[pd.y][pd.x];	//ポジションにあるコードの番号
 			str = '';
 			for (let pp = 0; pp < PIETMAX; pp++) {
@@ -174,7 +174,7 @@ window.onload = () => {
 				else if (pietData[pd.y][pd.x] < 18) {
 					//cnの更新
 					if (bn === 19) {
-						pwb == ";";
+						pwb = "";
 						cn = 0;
 					}
 					else {
@@ -378,13 +378,13 @@ window.onload = () => {
 				else {
 					//白
 					//ここも特に処理を書かない
-					showInfoArea.value += `通過:${pd.x},${pd.y}\n`;
+					showInfoArea.value += `通過:${"→↓←↑d"[dp]}${pd.x},${pd.y}\n`;
 					bn = 19;
-					if (pwb.indexOf(`;${pd.x},${pd.y};`) >= 0) {
+					if (pwb.indexOf(`;${"rdlu"[dp]}${pd.x},${pd.y};`) >= 0) {
 						showInfoArea.value += `終了`;
 						return;
 					}
-					pwb += `${pd.x},${pd.y};`;
+					pwb += `${"rdlu"[dp]}${pd.x},${pd.y};`;
 				}
 				//codelの移動
 				for (let i = 0; i <= 8; i++) {
