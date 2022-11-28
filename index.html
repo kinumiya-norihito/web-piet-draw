@@ -1,66 +1,93 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8"/>
-		<title>web piet draw</title>
-		<link href="main.css" rel="stylesheet"/>
-		<script src="main.js"></script>
-	</head>
-	<body>
-		<div class="configArea">
-			<div>
-				<details>
-					<summary>
-						各種設定
-					</summary>
-					codel:<input type="number" value="16" id="inputCodel"/><br/>
-					width:<input type="number" value="16" id="inputWidth"/><br/>
-					height:<input type="number" value="16" id="inputHeight"/><br/>
-					最大試行回数:<input type="number" value="1000000" id="attemptLimits"/><br/>
-					<input type="file" id="inputFiles"/><button id="importButton">読み込み</button><br/>
-					<button id="setButton">セット</button><br/>
-				</details>
-				ファイル名:<input type="text" id="inputFileName"><button id="exportButton">ダウンロード</button>
-			</div>
-		</div>
-		<div class="mainArea">
-			<div>
-				<button id="undoButton">Undo</button><button id="redoButton">Redo</button><br/>
-				<canvas id="colorPalette"></canvas><br/>
-				<canvas id="canvas"></canvas><textarea id="showCanvasInfo"></textarea><br/>
-				<button id="runButton">実行</button><br/>
-				出力:<textarea id="outArea"></textarea><br/>
-				<input type="radio" name="dtype" value="dot" checked>dot<br/>
-				<input type="radio" name="dtype" value="rect">rect<br/>
-			</div>
+
+<head>
+	<meta charset="utf-8" />
+	<title>web piet draw</title>
+	<link href="main.css" rel="stylesheet" />
+	<script src="main.js"></script>
+</head>
+
+<body>
+	<div class="configArea">
+		<div>
 			<details>
-				<summary>状態遷移など</summary>
-				<textarea id="showInfoArea"></textarea>
+				<summary>
+					各種設定
+				</summary>
+				codel:<input type="number" value="16" id="inputCodel" /><br />
+				width:<input type="number" value="16" id="inputWidth" /><br />
+				height:<input type="number" value="16" id="inputHeight" /><br />
+				最大試行回数:<input type="number" value="1000000" id="attemptLimits" /><br />
+				<input type="file" id="inputFiles" /><button id="importButton">読み込み</button><br />
+				<button id="setButton">セット</button><br />
 			</details>
-			<details>
-				<summary>説明</summary>
-				<p>
-					これはpietの仕様を正確に守っているとは言えないかもしれません。
-				</p>
-				<table>
-					<thead>
-						<tr>
-							<th></th><th>None</th><th>1 step</th><th>2 step</th><th>3 step</th><th>4 step</th><th>5 step</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th>None</th><td></td><td>add</td><td>div</td><td>greater</td><td>dup</td><td>in(char)</td>
-						</tr>
-						<tr>
-							<th>1 darker</th><td>push</td><td>sub</td><td>mod</td><td>pointer</td><td>roll</td><td>out(int)</td>
-						</tr>
-						<tr>
-							<th>2 darker</th><td>pop</td><td>mul</td><td>not</td><td>switch</td><td>in(int)</td><td>out(char)</td>
-						</tr>
-					</tbody>
-				</table>
-			</details>
+			ファイル名:<input type="text" id="inputFileName"><button id="exportButton">ダウンロード</button>
 		</div>
-	</body>
+	</div>
+	<div class="mainArea">
+		<div>
+			<button id="undoButton">Undo</button><button id="redoButton">Redo</button><br />
+			<canvas id="colorPalette"></canvas><br />
+			<canvas id="canvas"></canvas><textarea id="showCanvasInfo"></textarea><br />
+			<button id="runButton">実行</button><br />
+			出力:<textarea id="outArea"></textarea><br />
+			<input type="radio" name="dtype" value="dot" checked>dot<br />
+			<input type="radio" name="dtype" value="rect">rect<br />
+		</div>
+		<details>
+			<summary>状態遷移など</summary>
+			<textarea id="showInfoArea"></textarea>
+		</details>
+		<details>
+			<summary>説明</summary>
+			<p>
+				これはpietの仕様を正確に守っているとは言えないかもしれません。
+			</p>
+			<table>
+				<thead>
+					<tr>
+						<th></th>
+						<th>None</th>
+						<th>1 step</th>
+						<th>2 step</th>
+						<th>3 step</th>
+						<th>4 step</th>
+						<th>5 step</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>None</th>
+						<td></td>
+						<td>add</td>
+						<td>div</td>
+						<td>greater</td>
+						<td>dup</td>
+						<td>in(char)</td>
+					</tr>
+					<tr>
+						<th>1 darker</th>
+						<td>push</td>
+						<td>sub</td>
+						<td>mod</td>
+						<td>pointer</td>
+						<td>roll</td>
+						<td>out(int)</td>
+					</tr>
+					<tr>
+						<th>2 darker</th>
+						<td>pop</td>
+						<td>mul</td>
+						<td>not</td>
+						<td>switch</td>
+						<td>in(int)</td>
+						<td>out(char)</td>
+					</tr>
+				</tbody>
+			</table>
+		</details>
+	</div>
+</body>
+
 </html>
